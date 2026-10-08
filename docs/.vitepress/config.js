@@ -2,8 +2,8 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   base: '/learnAI/',
-  title: "Leonard 的博客",
-  description: "个人笔记博客",
+  title: "Leonard的博客",
+  description: "个人笔记博客，记录学习与思考",
   themeConfig: {
     outline: { level: [2,4], label: '本章目录' },
     sidebar: [
@@ -17,7 +17,9 @@ export default defineConfig({
       }
     ],
     nav: [
-      { text: '首页', link: '/' }
+      { text: '首页', link: '/' },
+      { text: '笔记合集', link: '/01-start' },
+      { text: '关于&联系', link: '/about' }
     ]
   }
 })
