@@ -4,13 +4,13 @@ export default defineConfig({
   base: '/learnAI/',
   title: "Lenard的博客",
   description: "个人笔记博客，记录学习与思考",
+  // 在这里添加配置，关闭标题旁边的 # 锚链接标记
+  markdown: {
+    anchor: {
+      permalink: false
+    }
+  },
   themeConfig: {
-    // 在这里添加配置，关闭标题旁边的 # 锚链接标记
-    markdown: {
-      anchor: {
-        permalink: false
-      }
-    },
     outline: { level: [2,4], label: '本章目录' },
     sidebar: [
       {
