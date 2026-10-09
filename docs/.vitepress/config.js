@@ -10,22 +10,31 @@ export default defineConfig({
       permalink: false
     }
   },
+  // 页面头部元信息
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/learnAI/favicon.svg' }],
+    ['link', { rel: 'icon', type: 'image/x-icon', href: '/learnAI/favicon.ico' }]
+  ],
+
   themeConfig: {
+    siteTitle: "Lenard · 个人博客",
     outline: { level: [2,4], label: '本章目录' },
     sidebar: [
       {
-        text: '📖 基础笔记',
+        text: '📖 AI学习笔记',
         items: [
-          { text: '首页', link: '/' },
+          // { text: '首页', link: '/' },
           { text: '第一章：起步', link: '/01-start' },
-          { text: '第二章：动效演示', link: '/02-animation' }
+          // { text: '第二章：动效演示', link: '/02-animation' }
         ]
       }
     ],
     nav: [
-      { text: '首页', link: '/' },
-      { text: '笔记合集', link: '/01-start' },
-      { text: '关于&联系', link: '/about' }
-    ]
+      { text: '笔记合集', link: 'https://superlenard.github.io/myblog/' },
+    ],
+    // GitHub 右上角链接
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/superLenard' }
+    ],
   }
 })

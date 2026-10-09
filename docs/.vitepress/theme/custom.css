@@ -1,0 +1,342 @@
+/* =========================================================
+   Lenard 博客 · 全局样式
+   通过 .vitepress/theme 引入，所有 md 页面共用
+   ========================================================= */
+
+/* ---------- 设计变量 ---------- */
+:root {
+  /* 布局 */
+  --site-sidebar-width: 180px;
+  --site-aside-width: 180px;
+  --site-content-width: 980px;
+  --site-content-width-plain: 960px;
+
+  /* 卡片 */
+  --site-card-radius: 18px;
+  --site-card-border: rgba(148, 163, 184, 0.18);
+  --site-card-bg: linear-gradient(150deg, rgba(30, 41, 59, 0.38), rgba(51, 65, 85, 0.22));
+  --site-card-title: #c7d2fe;
+  --site-card-desc: rgba(203, 213, 225, 0.82);
+  --site-card-glow: rgba(148, 163, 184, 0.2);
+
+  /* 布局覆盖：两侧收窄 + 正文铺宽 */
+  --vp-nav-bg-color: transparent !important;
+  --vp-nav-screen-bg-color: transparent !important;
+  --vp-local-nav-bg-color: transparent !important;
+  --vp-sidebar-bg-color: transparent !important;
+  --vp-c-gutter: transparent !important;
+  --vp-sidebar-width: var(--site-sidebar-width) !important;
+  --vp-layout-max-width: calc(33vw + 1165px) !important;
+}
+
+:root:not(.dark) {
+  --site-card-border: rgba(148, 163, 184, 0.22);
+  --site-card-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.7), rgba(241, 245, 249, 0.5));
+  --site-card-title: #4f46e5;
+  --site-card-desc: rgba(51, 65, 85, 0.82);
+  --site-card-glow: rgba(100, 116, 139, 0.2);
+}
+
+/* ---------- 页面底色（全站，无需页面内 HTML） ---------- */
+html,
+body {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.Layout::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 110% 58% at 50% -18%, rgba(125, 211, 252, 0.16) 0%, transparent 58%),
+    radial-gradient(ellipse 70% 48% at 10% 6%, rgba(165, 180, 252, 0.14) 0%, transparent 52%),
+    radial-gradient(ellipse 80% 55% at 88% 16%, rgba(196, 181, 253, 0.13) 0%, transparent 54%),
+    radial-gradient(ellipse 55% 42% at 72% 8%, rgba(251, 207, 232, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 65% 48% at 18% 78%, rgba(45, 212, 191, 0.09) 0%, transparent 52%),
+    radial-gradient(ellipse 70% 55% at 80% 78%, rgba(196, 181, 253, 0.07) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 42% at 88% 88%, rgba(251, 207, 232, 0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 48% 48%, rgba(129, 140, 248, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 38% at 35% 28%, rgba(244, 114, 182, 0.05) 0%, transparent 48%),
+    linear-gradient(180deg, #122038 0%, #0e1830 38%, #0c1428 70%, #0a1222 100%);
+}
+
+.Layout::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    /* 多色雾团 */
+    radial-gradient(circle 280px at 76% 18%, rgba(125, 211, 252, 0.12), transparent 72%),
+    radial-gradient(circle 240px at 22% 18%, rgba(251, 207, 232, 0.1), transparent 72%),
+    radial-gradient(circle 340px at 14% 70%, rgba(167, 139, 250, 0.1), transparent 72%),
+    radial-gradient(circle 300px at 82% 80%, rgba(167, 139, 250, 0.08), transparent 75%),
+    radial-gradient(circle 220px at 90% 88%, rgba(251, 207, 232, 0.05), transparent 75%),
+    radial-gradient(circle 200px at 52% 50%, rgba(129, 140, 248, 0.08), transparent 72%),
+    radial-gradient(circle 180px at 38% 82%, rgba(45, 212, 191, 0.08), transparent 72%),
+    radial-gradient(circle 160px at 68% 40%, rgba(244, 114, 182, 0.06), transparent 72%),
+    /* 轻暗角 */
+    radial-gradient(ellipse 100% 90% at 50% 50%, transparent 60%, rgba(8, 12, 24, 0.2) 100%);
+  animation: site-orbs-drift 20s ease-in-out infinite alternate;
+}
+
+:root:not(.dark) .Layout::before {
+  background:
+    radial-gradient(ellipse 110% 58% at 50% -18%, rgba(147, 197, 253, 0.2) 0%, transparent 58%),
+    radial-gradient(ellipse 70% 48% at 10% 6%, rgba(165, 180, 252, 0.16) 0%, transparent 52%),
+    radial-gradient(ellipse 80% 55% at 88% 16%, rgba(196, 181, 253, 0.15) 0%, transparent 54%),
+    radial-gradient(ellipse 55% 42% at 72% 8%, rgba(251, 207, 232, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse 65% 48% at 18% 78%, rgba(94, 234, 212, 0.12) 0%, transparent 52%),
+    radial-gradient(ellipse 70% 55% at 80% 78%, rgba(196, 181, 253, 0.08) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 42% at 88% 88%, rgba(251, 207, 232, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 48% 48%, rgba(129, 140, 248, 0.08) 0%, transparent 55%),
+    linear-gradient(180deg, #eef3fb 0%, #f0f1fb 40%, #f3f5fa 100%);
+}
+
+:root:not(.dark) .Layout::after {
+  background:
+    radial-gradient(circle 280px at 76% 18%, rgba(56, 189, 248, 0.12), transparent 72%),
+    radial-gradient(circle 240px at 22% 18%, rgba(244, 114, 182, 0.1), transparent 72%),
+    radial-gradient(circle 340px at 14% 70%, rgba(139, 92, 246, 0.1), transparent 72%),
+    radial-gradient(circle 300px at 82% 80%, rgba(139, 92, 246, 0.07), transparent 75%),
+    radial-gradient(circle 220px at 90% 88%, rgba(251, 207, 232, 0.05), transparent 75%),
+    radial-gradient(circle 200px at 52% 50%, rgba(99, 102, 241, 0.07), transparent 72%),
+    radial-gradient(circle 180px at 38% 82%, rgba(20, 184, 166, 0.08), transparent 72%),
+    radial-gradient(ellipse 100% 90% at 50% 50%, transparent 60%, rgba(226, 232, 240, 0.18) 100%);
+}
+
+@keyframes site-orbs-drift {
+  0% {
+    opacity: 0.85;
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02) translate(-8px, 5px);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1.01) translate(6px, -4px);
+  }
+}
+
+/* 兼容首页仍使用的 bg-container 节点 */
+.bg-container {
+  display: none;
+}
+
+/* ---------- 导航 / 侧栏透明 ---------- */
+.VPSidebar,
+.VPSidebar .sidebar-container,
+.VPLocalNav,
+.VPNav,
+.VPNavBar,
+.VPNavBar .wrapper,
+.VPNavBar .container,
+.VPNavBar .title,
+.VPNavBar .content,
+.VPNavBar .content-body,
+.VPNavBar .divider,
+.VPNavBar .divider-line,
+.VPNavBarTitle,
+.VPNavBarTitle .title,
+.VPNavBarScreen,
+.VPNavBarScreen .screen-container {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.VPNavBar:not(.home),
+.VPNavBar:not(.home.top),
+.VPNavBar:not(.home.top) .content-body,
+.VPNavBar:not(.has-sidebar):not(.home.top),
+.VPNavBar:not(.has-sidebar):not(.home.top) .content-body,
+.VPNavBar:not(.home) .divider-line,
+.VPNavBar:not(.home.top) .divider-line,
+.VPNavBar:not(.has-sidebar):not(.home.top) .divider {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+/* ---------- 布局宽度 ---------- */
+.VPDoc .aside,
+.VPDoc .aside-container {
+  max-width: var(--site-aside-width) !important;
+  width: var(--site-aside-width) !important;
+}
+
+.VPDocAsideOutline .content {
+  padding-left: 12px;
+}
+
+.VPDoc .content-container,
+.VPDoc.has-aside .content-container {
+  max-width: var(--site-content-width) !important;
+}
+
+.VPDoc:not(.has-sidebar) .content,
+.VPDoc:not(.has-sidebar) .content-container {
+  max-width: var(--site-content-width-plain) !important;
+}
+
+@media (min-width: 1280px) {
+  .VPDoc .content {
+    min-width: 520px;
+  }
+}
+
+/* ---------- 首页标题 ---------- */
+.VPHome h1 {
+  background: linear-gradient(120deg, #fbcfe8 0%, #c4b5fd 28%, #a5b4fc 52%, #7dd3fc 78%, #99f6e4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  text-shadow: none;
+  letter-spacing: 0.02em;
+}
+
+:root:not(.dark) .VPHome h1 {
+  background: linear-gradient(120deg, #db2777 0%, #7c3aed 20%, #4f46e5 55%, #2563eb 78%, #0d9488 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+.VPHome .tagline,
+.VPHome .VPHomeFeatures,
+.VPHome h2,
+.VPHome p {
+  position: relative;
+}
+
+/* ---------- 站点卡片 ---------- */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(600px, 100%), 1fr));
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+}
+
+.card-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  padding: 1.75rem;
+  border: 1px solid var(--site-card-border);
+  border-radius: var(--site-card-radius);
+  background: var(--site-card-bg);
+  text-decoration: none !important;
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease,
+    background 0.4s ease;
+}
+
+.card-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(186, 230, 253, 0.08) 0%,
+    transparent 42%,
+    transparent 58%,
+    rgba(221, 214, 254, 0.06) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-item::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.7s ease;
+}
+
+.card-item:hover {
+  border-color: rgba(186, 230, 253, 0.32);
+  transform: translateY(-5px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 16px 40px rgba(15, 23, 42, 0.24),
+    0 6px 22px rgba(129, 140, 248, 0.1),
+    0 2px 12px rgba(244, 114, 182, 0.06);
+}
+
+.card-item:hover::before {
+  opacity: 1;
+}
+
+.card-item:hover::after {
+  left: 130%;
+}
+
+.card-icon {
+  position: relative;
+  flex-shrink: 0;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  filter: drop-shadow(0 2px 8px var(--site-card-glow));
+  text-decoration: none !important;
+}
+
+.card-title {
+  position: relative;
+  margin-bottom: 0.65rem;
+  color: var(--site-card-title);
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.card-secondary .card-title {
+  color: #ddd6fe;
+}
+
+.card-desc {
+  position: relative;
+  color: var(--site-card-desc);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+:root:not(.dark) .card-item:hover {
+  border-color: rgba(129, 140, 248, 0.32);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 18px 40px rgba(100, 116, 139, 0.12),
+    0 4px 12px rgba(99, 102, 241, 0.06);
+}
+
+:root:not(.dark) .card-secondary .card-title {
+  color: #6d28d9;
+}
+
+/* ---------- 可访问性 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .Layout::after,
+  .card-item,
+  .card-item::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
