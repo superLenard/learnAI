@@ -7,7 +7,17 @@
 👉 https://superlenard.github.io/learnAI/
 
 ## 📚 笔记导航
-- [第一章：起步](https://superlenard.github.io/learnAI/01-start)
+- [第一章：学习路线](https://superlenard.github.io/learnAI/01-roadmap)
+- [第二章：大语言模型原理](https://superlenard.github.io/learnAI/llm-principles/)
+  - [2.1 大语言模型的演变](https://superlenard.github.io/learnAI/llm-principles/01-evolution)
+  - [2.2 核心思想：预测下一个词](https://superlenard.github.io/learnAI/llm-principles/02-next-word)
+  - [2.3 Token 与分词器](https://superlenard.github.io/learnAI/llm-principles/03-tokenizer)
+  - [2.4 Transformer 机制](https://superlenard.github.io/learnAI/llm-principles/04-transformer)
+  - [2.5 预训练与规模效应](https://superlenard.github.io/learnAI/llm-principles/05-pretraining)
+  - [2.6 上下文机制与 KV Cache](https://superlenard.github.io/learnAI/llm-principles/06-context)
+  - [2.7 主流模型与开源生态](https://superlenard.github.io/learnAI/llm-principles/07-models)
+  - [2.8 动手：跑一个小模型](https://superlenard.github.io/learnAI/llm-principles/08-hands-on)
+  - [2.9 小结](https://superlenard.github.io/learnAI/llm-principles/09-summary)
 
 
 [//]: # (## 📖 内容方向)

@@ -1,0 +1,75 @@
+<svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg" style="background-color: #ffffff; font-family: sans-serif;">
+  <!-- Background Paint -->
+  <rect width="900" height="450" fill="#ffffff" />
+
+  <!-- Main Pipeline Box -->
+  <rect x="50" y="30" width="800" height="390" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" />
+
+  <!-- Title inside graphic -->
+  <text x="450" y="65" text-anchor="middle" fill="#0f172a" font-size="18" font-weight="bold">“下一个词预测” 与温度阀门传导链路</text>
+
+  <!-- Step 1: Input -->
+  <g transform="translate(80, 110)">
+    <rect x="0" y="0" width="180" height="80" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+    <text x="90" y="30" text-anchor="middle" fill="#2563eb" font-size="12" font-weight="bold">【步骤 1】输入上下文</text>
+    <text x="90" y="58" text-anchor="middle" fill="#1e3a8a" font-size="14" font-weight="bold">“两岸猿声啼不住，”</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <line x1="260" y1="150" x2="310" y2="150" stroke="#94a3b8" stroke-width="3" />
+  <polygon points="315,150 305,144 305,156" fill="#94a3b8" />
+
+  <!-- Step 2: LLM Predict -->
+  <g transform="translate(320, 110)">
+    <rect x="0" y="0" width="200" height="80" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2" />
+    <text x="100" y="30" text-anchor="middle" fill="#6d28d9" font-size="12" font-weight="bold">【步骤 2】大模型概率计算</text>
+    <text x="100" y="55" text-anchor="middle" fill="#4c1d95" font-size="13">数万词表条件概率分布</text>
+    <text x="100" y="70" text-anchor="middle" fill="#7c3aed" font-size="11">P(Word | 上文)</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <line x1="520" y1="150" x2="570" y2="150" stroke="#94a3b8" stroke-width="3" />
+  <polygon points="575,150 565,144 565,156" fill="#94a3b8" />
+
+  <!-- Step 3: Candidate Pool -->
+  <g transform="translate(580, 110)">
+    <rect x="0" y="0" width="230" height="115" rx="8" fill="#fdf2f8" stroke="#db2777" stroke-width="2" />
+    <text x="115" y="25" text-anchor="middle" fill="#be185d" font-size="12" font-weight="bold">【步骤 3】原始词表概率</text>
+    <!-- Bar charts -->
+    <text x="25" y="55" fill="#0f172a" font-size="13">轻舟</text>
+    <rect x="65" y="44" width="110" height="14" fill="#db2777" rx="2" />
+    <text x="180" y="55" fill="#db2777" font-size="12" font-weight="bold">85%</text>
+
+    <text x="25" y="75" fill="#475569" font-size="13">孤帆</text>
+    <rect x="65" y="64" width="25" height="14" fill="#f472b6" rx="2" />
+    <text x="95" y="75" fill="#475569" font-size="12">10%</text>
+
+    <text x="25" y="95" fill="#475569" font-size="13">白帝</text>
+    <rect x="65" y="84" width="8" height="14" fill="#cbd5e1" rx="2" />
+    <text x="80" y="95" fill="#94a3b8" font-size="11">3%</text>
+  </g>
+
+  <!-- Temperature Valve Node (Downward Connection) -->
+  <g transform="translate(695, 235)">
+    <line x1="0" y1="0" x2="0" y2="55" stroke="#ea580c" stroke-width="3" stroke-dasharray="3" />
+    <circle cx="0" cy="25" r="18" fill="#fff7ed" stroke="#ea580c" stroke-width="2" />
+    <text x="0" y="29" text-anchor="middle" fill="#ea580c" font-size="11" font-weight="bold">温度阀</text>
+  </g>
+
+  <!-- Step 4: Final Output (Bottom Pipeline) -->
+  <g transform="translate(230, 310)">
+    <rect x="0" y="0" width="540" height="75" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" stroke-dasharray="4" />
+    <text x="220" y="25" text-anchor="middle" fill="#15803d" font-size="13" font-weight="bold">【步骤 4】结合 Temperature 的自回归最终输出</text>
+
+    <!-- Text streaming display -->
+    <text x="40" y="55" fill="#94a3b8" font-size="15">两岸猿声啼不住，</text>
+    <text x="175" y="55" fill="#0f172a" font-size="16" font-weight="bold">轻</text>
+    <text x="195" y="55" fill="#0f172a" font-size="16" font-weight="bold">舟</text>
+
+    <!-- Appending effect block -->
+    <rect x="215" y="38" width="18" height="22" fill="#bbf7d0" opacity="0.7">
+      <animate attributeName="opacity" values="0.2;0.9;0.2" dur="1.2s" repeatCount="indefinite" />
+    </rect>
+    <text x="240" y="55" fill="#16a34a" font-size="12" font-style="italic">将新生成的“轻舟”追加至输入，循环预测下一步</text>
+  </g>
+</svg>
