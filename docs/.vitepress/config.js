@@ -19,6 +19,11 @@ export default defineConfig({
   themeConfig: {
     siteTitle: "Lenard · 个人博客",
     outline: { level: [2,4], label: '本章目录' },
+    // 底部分页文案
+    docFooter: {
+      prev: '上一页',
+      next: '下一页'
+    },
     sidebar: [
       {
         text: '📖 AI 学习笔记',
