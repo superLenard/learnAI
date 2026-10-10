@@ -21,7 +21,7 @@ export default defineConfig({
     outline: { level: [2,4], label: '本章目录' },
     sidebar: [
       {
-        text: '📖 AI学习笔记',
+        text: '📖 AI 学习笔记',
         items: [
           // { text: '首页', link: '/' },
           { text: '第一章：起步', link: '/01-start' },
