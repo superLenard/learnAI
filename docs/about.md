@@ -14,4 +14,4 @@
 - 博客源码：[learnAI](https://github.com/superLenard/learnAI)
 
 ## 📋 目录快速跳转
-- [第一章：起步](/01-start)
+- [第一章：学习路线](/01-roadmap)

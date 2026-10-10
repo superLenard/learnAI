@@ -5,11 +5,12 @@
 
 /* ---------- 设计变量 ---------- */
 :root {
-  /* 布局 */
-  --site-sidebar-width: 180px;
-  --site-aside-width: 180px;
-  --site-content-width: 980px;
-  --site-content-width-plain: 960px;
+  /* 布局（响应式：随窗口缩放，min() 设上限保持大窗口原样；
+     侧栏+正文+右栏三者相加 ≤ 布局上限，保证右栏从约1280px起即可显示） */
+  --site-sidebar-width: min(300px, 19vw);
+  --site-aside-width: min(300px, 19vw);
+  --site-content-width: min(980px, 56vw);
+  --site-content-width-plain: min(960px, 76vw);
 
   /* 卡片 */
   --site-card-radius: 18px;
@@ -26,7 +27,7 @@
   --vp-sidebar-bg-color: transparent !important;
   --vp-c-gutter: transparent !important;
   --vp-sidebar-width: var(--site-sidebar-width) !important;
-  --vp-layout-max-width: calc(33vw + 1165px) !important;
+  --vp-layout-max-width: min(1600px, 94vw) !important;
 }
 
 :root:not(.dark) {
@@ -175,6 +176,30 @@ body {
 
 .VPDocAsideOutline .content {
   padding-left: 12px;
+}
+
+/* ---------- 右侧目录：标题超宽时省略号缩略（整链约束，宽/窄窗口均生效） ----------
+   逐层把目录约束到右侧栏宽度(width:100% + min-width:0)，
+   否则宽窗口下 VitePress 默认布局会让链接随内容撑宽，text-overflow 无法触发。 */
+.VPDocAsideOutline,
+.VPDocAsideOutline .content,
+.VPDocAsideOutline .outline,
+.VPDocAsideOutline .VPDocOutlineItem,
+.VPDocAsideOutline .VPDocOutlineItem li,
+.VPDocAsideOutline .outline-list,
+.VPDocAsideOutline .outline-item {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+.VPDocAsideOutline .outline-link {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  white-space: nowrap !important;
+  text-overflow: ellipsis !important;
 }
 
 .VPDoc .content-container,
@@ -338,5 +363,145 @@ body {
   .card-item::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* =========================================================
+   移动端适配（<768px，手机网页）
+   关键：覆盖上面 vw 响应式宽度，避免手机端正文被缩得过窄；
+   并处理表格/代码横向滚动，防止横向撑破屏幕。
+   ========================================================= */
+@media (max-width: 767px) {
+  :root {
+    --site-sidebar-width: 100%;
+    --site-aside-width: 100%;
+    --site-content-width: 100%;
+    --site-content-width-plain: 100%;
+    --vp-layout-max-width: 100% !important;
+  }
+
+  /* 正文铺满屏幕宽度 */
+  .VPDoc .content-container,
+  .VPDoc.has-aside .content-container,
+  .VPDoc:not(.has-sidebar) .content-container {
+    max-width: 100% !important;
+  }
+
+  /* 防止横向溢出（配合 100% 宽度） */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  /* 宽表格 / 代码块在手机端可横向滚动，避免撑破视口 */
+  .vp-doc table,
+  .vp-doc div[class*='language-'] {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 站点卡片收窄间距、单列铺满 */
+  .card-container {
+    gap: 0.9rem;
+    margin: 1.5rem 0;
+  }
+  .card-item {
+    padding: 1.2rem;
+    border-radius: 14px;
+  }
+  .card-title {
+    font-size: 1.15rem;
+  }
+  .card-desc {
+    font-size: 0.88rem;
+  }
+
+  /* 首页标题适屏字号 */
+  .VPHome h1 {
+    font-size: 1.9rem;
+    letter-spacing: 0.01em;
+  }
+
+  /* 背景动画在手机端可关，省电更流畅 */
+  .Layout::after {
+    animation: none !important;
+  }
+
+  /* 把“返回顶部”从“本章目录”下拉里移除（它不是章节标题） */
+  .VPLocalNavOutlineDropdown .items .header {
+    display: none !important;
+  }
+}
+
+/* ---------- 移动端悬浮“返回顶部”按钮（替代下拉内错位的按钮） ---------- */
+.back-top-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 26px;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 999px;
+  background: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand-1);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.18);
+  cursor: pointer;
+}
+.back-top-btn.show {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .back-top-btn {
+    display: none !important;
+  }
+}
+
+/* ---------- 移动端导航栏右侧：显示 笔记合集 / 外观 / github 并紧凑排布 ---------- */
+@media (max-width: 767px) {
+  /* 取消容器居中留白，让导航栏左缘与正文左缘对齐 */
+  .VPNavBar .container {
+    max-width: 100% !important;
+  }
+
+  /* 默认被 VitePress 隐藏，强制显示 */
+  .VPNavBarMenu,
+  .VPNavBarAppearance,
+  .VPNavBarSocialLinks {
+    display: flex !important;
+    align-items: center;
+  }
+
+  /* “笔记合集”链接在移动端更紧凑 */
+  .VPNavBarMenuLink {
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  /* 标题字号收窄，给右侧 icon 腾位 */
+  .VPNavBarTitle .title {
+    font-size: 16px;
+  }
+
+  /* 隐藏汉堡菜单按钮：侧边栏仍可由下方“目录”按钮打开，避免与 github 并列冗余 */
+  .VPNavBarHamburger {
+    display: none !important;
+  }
+}
+
+/* 更窄的手机：进一步压缩，防止右侧溢出 */
+@media (max-width: 480px) {
+  .VPNavBarTitle .title {
+    font-size: 14px;
+  }
+  .VPNavBarMenuLink {
+    padding: 0 6px;
+    font-size: 12px;
   }
 }

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="720" viewBox="0 0 560 720" font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+  <defs>
+    <linearGradient id="tg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="tb" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef2ff"/>
+    </linearGradient>
+    <marker id="arrt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7dd3fc"/>
+    </marker>
+  </defs>
+  <rect width="560" height="720" rx="14" fill="#f8fbff"/>
+
+  <text x="280" y="36" text-anchor="middle" font-size="19" font-weight="700" fill="#0c4a6e">Transformer 架构（生成式解码器）</text>
+  <text x="280" y="58" text-anchor="middle" font-size="12.5" fill="#64748b">自上而下，每层都在"读前面 + 提炼 + 预测下一个"</text>
+
+  <g font-family="'Microsoft YaHei','PingFang SC',sans-serif">
+    <!-- 输入 -->
+    <rect x="120" y="74" width="320" height="56" rx="10" fill="#e0f2fe" stroke="#bae6fd"/>
+    <text x="280" y="97" text-anchor="middle" font-size="14" font-weight="700" fill="#0369a1">输入 Token 序列</text>
+    <text x="280" y="117" text-anchor="middle" font-size="12" fill="#64748b">[今天][天气][很][好]</text>
+
+    <line x1="280" y1="130" x2="280" y2="150" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- 嵌入+位置 -->
+    <rect x="120" y="152" width="320" height="50" rx="10" fill="#f0f9ff" stroke="#bae6fd"/>
+    <text x="280" y="174" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0369a1">Token 嵌入 + 位置编码</text>
+    <text x="280" y="191" text-anchor="middle" font-size="11.5" fill="#64748b">加上"我是第几个词"的位置信息</text>
+
+    <line x1="280" y1="202" x2="280" y2="222" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- 主块 掩码多头自注意力 -->
+    <rect x="100" y="224" width="360" height="118" rx="12" fill="url(#tg)"/>
+    <text x="280" y="252" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">Masked 多头自注意力</text>
+    <text x="280" y="274" text-anchor="middle" font-size="12.5" fill="#e0f2fe">每个 token 关注前面所有 token</text>
+    <text x="280" y="294" text-anchor="middle" font-size="12.5" fill="#e0f2fe">多组注意力看不同关系（语法/指代/主题）</text>
+    <text x="280" y="314" text-anchor="middle" font-size="11.5" fill="#bae6fd">Masked = 只看历史，不偷看未来</text>
+
+    <line x1="280" y1="342" x2="280" y2="356" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- + 残差 & LN -->
+    <rect x="120" y="358" width="320" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="280" y="387" text-anchor="middle" font-size="13.5" font-weight="700" fill="#475569">＋ 残差连接 · 层归一化</text>
+
+    <line x1="280" y1="404" x2="280" y2="418" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- FFN -->
+    <rect x="100" y="420" width="360" height="92" rx="12" fill="url(#tg)"/>
+    <text x="280" y="448" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff">前馈网络 Feed-Forward</text>
+    <text x="280" y="470" text-anchor="middle" font-size="12.5" fill="#e0f2fe">对每个位置做非线性变换</text>
+    <text x="280" y="490" text-anchor="middle" font-size="12.5" fill="#e0f2fe">增强模型表达能力</text>
+
+    <line x1="280" y1="512" x2="280" y2="526" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- + 残差 & LN -->
+    <rect x="120" y="528" width="320" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="280" y="557" text-anchor="middle" font-size="13.5" font-weight="700" fill="#475569">＋ 残差连接 · 层归一化</text>
+
+    <!-- 右侧 ×N 括号 -->
+    <path d="M 468 224 L 490 224 L 490 574 L 468 574" fill="none" stroke="#94a3b8" stroke-width="2"/>
+    <text x="510" y="402" text-anchor="middle" font-size="18" font-weight="800" fill="#64748b">× N</text>
+
+    <line x1="280" y1="574" x2="280" y2="598" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- 线性+softmax -->
+    <rect x="120" y="600" width="320" height="50" rx="10" fill="#e0f2fe" stroke="#bae6fd"/>
+    <text x="280" y="622" text-anchor="middle" font-size="13.5" font-weight="700" fill="#0369a1">线性层 + Softmax</text>
+    <text x="280" y="640" text-anchor="middle" font-size="11.5" fill="#64748b">映射到词表概率</text>
+
+    <line x1="280" y1="650" x2="280" y2="668" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#arrt)"/>
+
+    <!-- 输出 -->
+    <rect x="140" y="670" width="280" height="38" rx="18" fill="#ecfdf5" stroke="#a7f3d0"/>
+    <text x="280" y="694" text-anchor="middle" font-size="13.5" font-weight="700" fill="#047857">输出：下一个词的概率分布</text>
+  </g>
+</svg>
