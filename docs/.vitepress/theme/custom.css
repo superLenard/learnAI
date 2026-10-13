@@ -1,18 +1,19 @@
 /* =========================================================
-   Lenard 博客 · 全局样式
-   通过 .vitepress/theme 引入，所有 md 页面共用
+   Lenard 博客 · 全局样式高级调优版
+   通过 .vitepress/theme 引入，全站统一视觉语言
    ========================================================= */
 
-/* ---------- 设计变量 ---------- */
+/* ---------------------------------------------------------
+   1. 设计变量体系 (Design Tokens)
+   --------------------------------------------------------- */
 :root {
-  /* 布局（响应式：随窗口缩放，min() 设上限保持大窗口原样；
-     侧栏+正文+右栏三者相加 ≤ 布局上限，保证右栏从约1280px起即可显示） */
+  /* 响应式布局：动态计算与安全上限约束 */
   --site-sidebar-width: min(300px, 19vw);
   --site-aside-width: min(300px, 19vw);
   --site-content-width: min(980px, 56vw);
   --site-content-width-plain: min(960px, 76vw);
 
-  /* 卡片 */
+  /* 🌙 深色模式默认变量 (全站磨砂暗夜基调) */
   --site-card-radius: 18px;
   --site-card-border: rgba(148, 163, 184, 0.18);
   --site-card-bg: linear-gradient(150deg, rgba(30, 41, 59, 0.38), rgba(51, 65, 85, 0.22));
@@ -20,7 +21,14 @@
   --site-card-desc: rgba(203, 213, 225, 0.82);
   --site-card-glow: rgba(148, 163, 184, 0.2);
 
-  /* 布局覆盖：两侧收窄 + 正文铺宽 */
+  /* 🧩 现代半透明表格系统（深色） */
+  --site-table-bg: rgba(30, 41, 59, 0.35);
+  --site-table-stripe: rgba(51, 65, 85, 0.2);
+  --site-table-header-bg: rgba(199, 210, 254, 0.08);
+  --site-table-header-text: #c7d2fe;
+  --site-table-border: rgba(148, 163, 184, 0.18);
+
+  /* VitePress 核心层强行透空覆盖 */
   --vp-nav-bg-color: transparent !important;
   --vp-nav-screen-bg-color: transparent !important;
   --vp-local-nav-bg-color: transparent !important;
@@ -31,26 +39,43 @@
 }
 
 :root:not(.dark) {
+  /* ☀️ 浅色模式变量切换 (明亮柔和极光) */
   --site-card-border: rgba(148, 163, 184, 0.22);
   --site-card-bg: linear-gradient(150deg, rgba(255, 255, 255, 0.7), rgba(241, 245, 249, 0.5));
   --site-card-title: #4f46e5;
   --site-card-desc: rgba(51, 65, 85, 0.82);
   --site-card-glow: rgba(100, 116, 139, 0.2);
+
+  /* 🧩 现代半透明表格系统（浅色） */
+  --site-table-bg: rgba(255, 255, 255, 0.45);
+  --site-table-stripe: rgba(241, 245, 249, 0.4);
+  --site-table-header-bg: rgba(79, 70, 229, 0.08);
+  --site-table-header-text: #4f46e5;
+  --site-table-border: rgba(148, 163, 184, 0.25);
 }
 
-/* ---------- 页面底色（全站，无需页面内 HTML） ---------- */
-html,
-body {
+/* ---------------------------------------------------------
+   2. 极光雾团全站底色工程 (Background Engine)
+   --------------------------------------------------------- */
+html, body {
   background-color: transparent !important;
   background-image: none !important;
 }
 
-.Layout::before {
+/* 统一底层渲染基类，开启硬件加速 */
+.Layout::before,
+.Layout::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* 🌙 深色底色层 */
+.Layout::before {
   background:
     radial-gradient(ellipse 110% 58% at 50% -18%, rgba(125, 211, 252, 0.16) 0%, transparent 58%),
     radial-gradient(ellipse 70% 48% at 10% 6%, rgba(165, 180, 252, 0.14) 0%, transparent 52%),
@@ -64,14 +89,9 @@ body {
     linear-gradient(180deg, #122038 0%, #0e1830 38%, #0c1428 70%, #0a1222 100%);
 }
 
+/* 🌙 深色雾团动效层 */
 .Layout::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
   background:
-    /* 多色雾团 */
     radial-gradient(circle 280px at 76% 18%, rgba(125, 211, 252, 0.12), transparent 72%),
     radial-gradient(circle 240px at 22% 18%, rgba(251, 207, 232, 0.1), transparent 72%),
     radial-gradient(circle 340px at 14% 70%, rgba(167, 139, 250, 0.1), transparent 72%),
@@ -80,11 +100,12 @@ body {
     radial-gradient(circle 200px at 52% 50%, rgba(129, 140, 248, 0.08), transparent 72%),
     radial-gradient(circle 180px at 38% 82%, rgba(45, 212, 191, 0.08), transparent 72%),
     radial-gradient(circle 160px at 68% 40%, rgba(244, 114, 182, 0.06), transparent 72%),
-    /* 轻暗角 */
     radial-gradient(ellipse 100% 90% at 50% 50%, transparent 60%, rgba(8, 12, 24, 0.2) 100%);
+  -webkit-animation: site-orbs-drift 20s ease-in-out infinite alternate;
   animation: site-orbs-drift 20s ease-in-out infinite alternate;
 }
 
+/* ☀️ 浅色底色层 */
 :root:not(.dark) .Layout::before {
   background:
     radial-gradient(ellipse 110% 58% at 50% -18%, rgba(147, 197, 253, 0.2) 0%, transparent 58%),
@@ -98,6 +119,7 @@ body {
     linear-gradient(180deg, #eef3fb 0%, #f0f1fb 40%, #f3f5fa 100%);
 }
 
+/* ☀️ 浅色雾团静止/动效层 */
 :root:not(.dark) .Layout::after {
   background:
     radial-gradient(circle 280px at 76% 18%, rgba(56, 189, 248, 0.12), transparent 72%),
@@ -111,83 +133,50 @@ body {
 }
 
 @keyframes site-orbs-drift {
-  0% {
-    opacity: 0.85;
-    transform: scale(1) translate(0, 0);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.02) translate(-8px, 5px);
-  }
-  100% {
-    opacity: 0.9;
-    transform: scale(1.01) translate(6px, -4px);
-  }
+  0% { -webkit-transform: scale(1) translate(0, 0); transform: scale(1) translate(0, 0); opacity: 0.85; }
+  50% { -webkit-transform: scale(1.02) translate(-8px, 5px); transform: scale(1.02) translate(-8px, 5px); opacity: 1; }
+  100% { -webkit-transform: scale(1.01) translate(6px, -4px); transform: scale(1.01) translate(6px, -4px); opacity: 0.9; }
 }
 
-/* 兼容首页仍使用的 bg-container 节点 */
-.bg-container {
-  display: none;
-}
+.bg-container { display: none; }
 
-/* ---------- 导航 / 侧栏透明 ---------- */
-.VPSidebar,
-.VPSidebar .sidebar-container,
-.VPLocalNav,
-.VPNav,
-.VPNavBar,
-.VPNavBar .wrapper,
-.VPNavBar .container,
-.VPNavBar .title,
-.VPNavBar .content,
-.VPNavBar .content-body,
-.VPNavBar .divider,
-.VPNavBar .divider-line,
-.VPNavBarTitle,
-.VPNavBarTitle .title,
-.VPNavBarScreen,
-.VPNavBarScreen .screen-container {
+/* ---------------------------------------------------------
+   3. 核心框级、树级 UI 彻底透明化组件
+   --------------------------------------------------------- */
+.VPSidebar, .VPSidebar .sidebar-container, .VPLocalNav,
+.VPNav, .VPNavBar, .VPNavBar .wrapper, .VPNavBar .container,
+.VPNavBar .title, .VPNavBar .content, .VPNavBar .content-body,
+.VPNavBar .divider, .VPNavBar .divider-line, .VPNavBarTitle,
+.VPNavBarTitle .title, .VPNavBarScreen, .VPNavBarScreen .screen-container {
   background-color: transparent !important;
   background-image: none !important;
   border-bottom-color: transparent !important;
   box-shadow: none !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
-.VPNavBar:not(.home),
-.VPNavBar:not(.home.top),
-.VPNavBar:not(.home.top) .content-body,
-.VPNavBar:not(.has-sidebar):not(.home.top),
-.VPNavBar:not(.has-sidebar):not(.home.top) .content-body,
-.VPNavBar:not(.home) .divider-line,
-.VPNavBar:not(.home.top) .divider-line,
+.VPNavBar:not(.home), .VPNavBar:not(.home.top), .VPNavBar:not(.home.top) .content-body,
+.VPNavBar:not(.has-sidebar):not(.home.top), .VPNavBar:not(.has-sidebar):not(.home.top) .content-body,
+.VPNavBar:not(.home) .divider-line, .VPNavBar:not(.home.top) .divider-line,
 .VPNavBar:not(.has-sidebar):not(.home.top) .divider {
   background-color: transparent !important;
   border-color: transparent !important;
 }
 
-/* ---------- 布局宽度 ---------- */
-.VPDoc .aside,
-.VPDoc .aside-container {
+/* ---------------------------------------------------------
+   4. 响应式核心容器控制
+   --------------------------------------------------------- */
+.VPDoc .aside, .VPDoc .aside-container {
   max-width: var(--site-aside-width) !important;
   width: var(--site-aside-width) !important;
 }
+.VPDocAsideOutline .content { padding-left: 12px; }
 
-.VPDocAsideOutline .content {
-  padding-left: 12px;
-}
-
-/* ---------- 右侧目录：标题超宽时省略号缩略（整链约束，宽/窄窗口均生效） ----------
-   逐层把目录约束到右侧栏宽度(width:100% + min-width:0)，
-   否则宽窗口下 VitePress 默认布局会让链接随内容撑宽，text-overflow 无法触发。 */
-.VPDocAsideOutline,
-.VPDocAsideOutline .content,
-.VPDocAsideOutline .outline,
-.VPDocAsideOutline .VPDocOutlineItem,
-.VPDocAsideOutline .VPDocOutlineItem li,
-.VPDocAsideOutline .outline-list,
-.VPDocAsideOutline .outline-item {
+/* 右侧文档大纲超宽缩略防御 */
+.VPDocAsideOutline, .VPDocAsideOutline .content, .VPDocAsideOutline .outline,
+.VPDocAsideOutline .VPDocOutlineItem, .VPDocAsideOutline .VPDocOutlineItem li,
+.VPDocAsideOutline .outline-list, .VPDocAsideOutline .outline-item {
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
@@ -202,23 +191,17 @@ body {
   text-overflow: ellipsis !important;
 }
 
-.VPDoc .content-container,
-.VPDoc.has-aside .content-container {
+.VPDoc .content-container, .VPDoc.has-aside .content-container {
   max-width: var(--site-content-width) !important;
 }
-
-.VPDoc:not(.has-sidebar) .content,
-.VPDoc:not(.has-sidebar) .content-container {
+.VPDoc:not(.has-sidebar) .content, .VPDoc:not(.has-sidebar) .content-container {
   max-width: var(--site-content-width-plain) !important;
 }
+@media (min-width: 1280px) { .VPDoc .content { min-width: 520px; } }
 
-@media (min-width: 1280px) {
-  .VPDoc .content {
-    min-width: 520px;
-  }
-}
-
-/* ---------- 首页标题 ---------- */
+/* ---------------------------------------------------------
+   5. 首页与排版高级扩展
+   --------------------------------------------------------- */
 .VPHome h1 {
   background: linear-gradient(120deg, #fbcfe8 0%, #c4b5fd 28%, #a5b4fc 52%, #7dd3fc 78%, #99f6e4 100%);
   -webkit-background-clip: text;
@@ -227,30 +210,24 @@ body {
   text-shadow: none;
   letter-spacing: 0.02em;
 }
-
 :root:not(.dark) .VPHome h1 {
   background: linear-gradient(120deg, #db2777 0%, #7c3aed 20%, #4f46e5 55%, #2563eb 78%, #0d9488 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
 }
+.VPHome .tagline, .VPHome .VPHomeFeatures, .VPHome h2, .VPHome p { position: relative; }
 
-.VPHome .tagline,
-.VPHome .VPHomeFeatures,
-.VPHome h2,
-.VPHome p {
-  position: relative;
-}
-
-/* ---------- 站点卡片 ---------- */
+/* ---------------------------------------------------------
+   6. 站点卡片组件 (Card Component)
+   --------------------------------------------------------- */
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(600px, 100%), 1fr));
   gap: 1.5rem;
   margin: 2.5rem 0;
-}
-
-.card-item {
+  }
+  .card-item {
   display: flex;
   align-items: baseline;
   gap: 1rem;
@@ -261,31 +238,21 @@ body {
   border-radius: var(--site-card-radius);
   background: var(--site-card-bg);
   text-decoration: none !important;
-  backdrop-filter: blur(18px) saturate(1.1);
   -webkit-backdrop-filter: blur(18px) saturate(1.1);
-  transition:
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s ease,
-    border-color 0.4s ease,
-    background 0.4s ease;
-}
-
-.card-item::before {
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0); /* 开启GPU硬件加速，消除滑动闪烁 */
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+  }
+  .card-item::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(186, 230, 253, 0.08) 0%,
-    transparent 42%,
-    transparent 58%,
-    rgba(221, 214, 254, 0.06) 100%
-  );
+  background: linear-gradient(135deg, rgba(186, 230, 253, 0.08) 0%, transparent 42%, transparent 58%, rgba(221, 214, 254, 0.06) 100%);
   opacity: 0;
   transition: opacity 0.4s ease;
-}
-
-.card-item::after {
+  }
+  .card-item::after {
   content: "";
   position: absolute;
   top: 0;
@@ -295,213 +262,135 @@ body {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
   transform: skewX(-18deg);
   transition: left 0.7s ease;
-}
-
-.card-item:hover {
+  }
+  .card-item:hover {
   border-color: rgba(186, 230, 253, 0.32);
   transform: translateY(-5px);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.05) inset,
-    0 16px 40px rgba(15, 23, 42, 0.24),
-    0 6px 22px rgba(129, 140, 248, 0.1),
-    0 2px 12px rgba(244, 114, 182, 0.06);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 16px 40px rgba(15, 23, 42, 0.24), 0 6px 22px rgba(129, 140, 248, 0.1), 0 2px 12px rgba(244, 114, 182, 0.06);
+  }
+  .card-item:hover::before { opacity: 1; }
+  .card-item:hover::after { left: 130%; }
+  .card-icon { position: relative; flex-shrink: 0; font-size: 2.1rem; line-height: 1.15; filter: drop-shadow(0 2px 8px var(--site-card-glow)); text-decoration: none !important; }
+  .card-title { position: relative; margin-bottom: 0.65rem; color: var(--site-card-title); font-size: 1.35rem; font-weight: 650; letter-spacing: 0.02em; }
+  .card-secondary .card-title { color: #ddd6fe; }
+  .card-desc { position: relative; color: var(--site-card-desc); font-size: 0.95rem; line-height: 1.35; }
+  :root:not(.dark) .card-item:hover {
+  border-color: rgba(129, 140, 248, 0.32);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset, 0 18px 40px rgba(100, 116, 139, 0.12), 0 4px 12px rgba(99, 102, 241, 0.06);
+  }
+  :root:not(.dark) .card-secondary .card-title { color: #6d28d9; }
+/* ---------------------------------------------------------
+   7. 磨砂玻璃全域自适应表格组件 (Glassmorphism Table)
+   --------------------------------------------------------- */
+.vp-doc table {
+  display: table !important;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2rem 0;
+  overflow: hidden;
+  border: 1px solid var(--site-table-border) !important;
+  border-radius: 12px;
+  background: var(--site-table-bg);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.4s ease, background 0.4s ease;
 }
-
-.card-item:hover::before {
-  opacity: 1;
-}
-
-.card-item:hover::after {
-  left: 130%;
-}
-
-.card-icon {
-  position: relative;
-  flex-shrink: 0;
-  font-size: 2.1rem;
-  line-height: 1.15;
-  filter: drop-shadow(0 2px 8px var(--site-card-glow));
-  text-decoration: none !important;
-}
-
-.card-title {
-  position: relative;
-  margin-bottom: 0.65rem;
-  color: var(--site-card-title);
-  font-size: 1.35rem;
+.vp-doc th {
+  background-color: var(--site-table-header-bg) !important;
+  color: var(--site-table-header-text) !important;
   font-weight: 650;
   letter-spacing: 0.02em;
+  padding: 14px 16px;
+  border: none !important;
+  border-bottom: 2px solid var(--site-table-border) !important;
 }
-
-.card-secondary .card-title {
-  color: #ddd6fe;
+.vp-doc td {
+  padding: 12px 16px;
+  border: none !important;
+  border-bottom: 1px solid var(--site-table-border) !important;
+  color: var(--vp-c-text-1);
 }
-
-.card-desc {
-  position: relative;
-  color: var(--site-card-desc);
-  font-size: 0.95rem;
-  line-height: 1.35;
+.vp-doc tr:last-child td { border-bottom: none !important; }
+.vp-doc tr:nth-child(even) { background-color: var(--site-table-stripe) !important; }
+.vp-doc tr:nth-child(odd) { background-color: transparent !important; }
+.vp-doc tr:hover td {
+  background-color: rgba(129, 140, 248, 0.06) !important;
+  transition: background-color 0.2s ease;
 }
-
-:root:not(.dark) .card-item:hover {
-  border-color: rgba(129, 140, 248, 0.32);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.65) inset,
-    0 18px 40px rgba(100, 116, 139, 0.12),
-    0 4px 12px rgba(99, 102, 241, 0.06);
+/* ---------------------------------------------------------
+8. 独立技术图表适配 (SVG Diagram Filters)
+--------------------------------------------------------- */
+.svg-diagram { display: block; margin: 1.5rem auto; max-width: 100%; }
+.dark .svg-diagram { filter: invert(0.9) hue-rotate(180deg); mix-blend-mode: screen; }
+/* ---------------------------------------------------------
+9. 文档高级排修（消除原生硬黑死白死角）
+--------------------------------------------------------- */
+.dark .vp-doc :not(pre) > code {
+  background-color: rgba(241, 245, 249, 0.08) !important;
+  color: #fbcfe8 !important;
 }
-
-:root:not(.dark) .card-secondary .card-title {
-  color: #6d28d9;
+.dark .vp-doc blockquote {
+  background-color: rgba(30, 41, 59, 0.25) !important;
+  border-left-color: #a5b4fc !important;
 }
-
-/* ---------- 可访问性 ---------- */
-@media (prefers-reduced-motion: reduce) {
-  .Layout::after,
-  .card-item,
-  .card-item::after {
-    animation: none !important;
-    transition: none !important;
-  }
+.vp-doc hr {
+  border-top-color: var(--site-card-border) !important;
 }
-
-/* =========================================================
-   移动端适配（<768px，手机网页）
-   关键：覆盖上面 vw 响应式宽度，避免手机端正文被缩得过窄；
-   并处理表格/代码横向滚动，防止横向撑破屏幕。
-   ========================================================= */
+/* ---------------------------------------------------------
+10. 移动端适配调优 (<768px 安全适配区)
+--------------------------------------------------------- */
 @media (max-width: 767px) {
-  :root {
-    --site-sidebar-width: 100%;
-    --site-aside-width: 100%;
-    --site-content-width: 100%;
-    --site-content-width-plain: 100%;
-    --vp-layout-max-width: 100% !important;
-  }
-
-  /* 正文铺满屏幕宽度 */
-  .VPDoc .content-container,
-  .VPDoc.has-aside .content-container,
-  .VPDoc:not(.has-sidebar) .content-container {
-    max-width: 100% !important;
-  }
-
-  /* 防止横向溢出（配合 100% 宽度） */
-  html,
-  body {
-    overflow-x: hidden;
-  }
-
-  /* 宽表格 / 代码块在手机端可横向滚动，避免撑破视口 */
-  .vp-doc table,
-  .vp-doc div[class*='language-'] {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* 站点卡片收窄间距、单列铺满 */
-  .card-container {
-    gap: 0.9rem;
-    margin: 1.5rem 0;
-  }
-  .card-item {
-    padding: 1.2rem;
-    border-radius: 14px;
-  }
-  .card-title {
-    font-size: 1.15rem;
-  }
-  .card-desc {
-    font-size: 0.88rem;
-  }
-
-  /* 首页标题适屏字号 */
-  .VPHome h1 {
-    font-size: 1.9rem;
-    letter-spacing: 0.01em;
-  }
-
-  /* 背景动画在手机端可关，省电更流畅 */
-  .Layout::after {
-    animation: none !important;
-  }
-
-  /* 把“返回顶部”从“本章目录”下拉里移除（它不是章节标题） */
-  .VPLocalNavOutlineDropdown .items .header {
-    display: none !important;
-  }
+:root {
+  --site-sidebar-width: 100%;
+  --site-aside-width: 100%;
+  --site-content-width: 100%;
+  --site-content-width-plain: 100%;
+  --vp-layout-max-width: 100% !important;
 }
-
-/* ---------- 移动端悬浮“返回顶部”按钮（替代下拉内错位的按钮） ---------- */
-.back-top-btn {
-  position: fixed;
-  right: 18px;
-  bottom: 26px;
-  z-index: 300;
-  display: none;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 14px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-brand-1);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1;
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.18);
-  cursor: pointer;
+.VPDoc .content-container, .VPDoc.has-aside .content-container,
+.VPDoc:not(.has-sidebar) .content-container { max-width: 100% !important; }
+html, body { overflow-x: hidden; }
+/* 移动端表格与代码轻量滚动化，避免撑破视口 /
+.vp-doc table { display: block !important; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.vp-doc div[class='language-'] { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+/* 移动端彻底关停动画，大幅度省电及降低发热 */
+.Layout::after { -webkit-animation: none !important; animation: none !important; }
+.card-container { gap: 0.9rem; margin: 1.5rem 0; }
+.card-item { padding: 1.2rem; border-radius: 14px; }
+.card-title { font-size: 1.15rem; }
+.card-desc { font-size: 0.88rem; }
+.VPHome h1 { font-size: 1.9rem; letter-spacing: 0.01em; }
+.VPLocalNavOutlineDropdown .items .header { display: none !important; }
+/* 移动端顶部标题与图标紧凑化策略 */
+.VPNavBar .container { max-width: 100% !important; }
+.VPNavBarMenu, .VPNavBarAppearance, .VPNavBarSocialLinks { display: flex !important; align-items: center; }
+.VPNavBarMenuLink { padding: 0 8px; font-size: 13px; }
+.VPNavBarTitle .title { font-size: 16px; }
+.VPNavBarHamburger { display: none !important; }
 }
-.back-top-btn.show {
-  display: flex;
-}
-@media (min-width: 768px) {
-  .back-top-btn {
-    display: none !important;
-  }
-}
-
-/* ---------- 移动端导航栏右侧：显示 笔记合集 / 外观 / github 并紧凑排布 ---------- */
-@media (max-width: 767px) {
-  /* 取消容器居中留白，让导航栏左缘与正文左缘对齐 */
-  .VPNavBar .container {
-    max-width: 100% !important;
-  }
-
-  /* 默认被 VitePress 隐藏，强制显示 */
-  .VPNavBarMenu,
-  .VPNavBarAppearance,
-  .VPNavBarSocialLinks {
-    display: flex !important;
-    align-items: center;
-  }
-
-  /* “笔记合集”链接在移动端更紧凑 */
-  .VPNavBarMenuLink {
-    padding: 0 8px;
-    font-size: 13px;
-  }
-
-  /* 标题字号收窄，给右侧 icon 腾位 */
-  .VPNavBarTitle .title {
-    font-size: 16px;
-  }
-
-  /* 隐藏汉堡菜单按钮：侧边栏仍可由下方“目录”按钮打开，避免与 github 并列冗余 */
-  .VPNavBarHamburger {
-    display: none !important;
-  }
-}
-
-/* 更窄的手机：进一步压缩，防止右侧溢出 */
 @media (max-width: 480px) {
-  .VPNavBarTitle .title {
-    font-size: 14px;
-  }
-  .VPNavBarMenuLink {
-    padding: 0 6px;
-    font-size: 12px;
+  .VPNavBarTitle .title { font-size: 14px; }
+  .VPNavBarMenuLink { padding: 0 6px; font-size: 12px; }
+}
+/* 移动端特供：独立悬浮“返回顶部”组件 */
+.back-top-btn {
+  position: fixed; right: 18px; bottom: 26px; z-index: 300; display: none;
+  align-items: center; gap: 4px; padding: 8px 14px; border: 1px solid var(--vp-c-divider);
+  border-radius: 999px; background: var(--vp-c-bg-soft); color: var(--vp-c-brand-1);
+  font-size: 13px; font-weight: 500; line-height: 1; box-shadow: 0 6px 20px rgba(15, 23, 42, 0.18); cursor: pointer;
+}
+.back-top-btn.show { display: flex; }
+@media (min-width: 768px) { .back-top-btn { display: none !important; } }
+/* ---------------------------------------------------------
+11. 可访问性减速防御 (Accessibility)
+--------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .Layout::after, .card-item, .card-item::after {
+  -webkit-animation: none !important; animation: none !important;
+  transition: none !important;
   }
 }

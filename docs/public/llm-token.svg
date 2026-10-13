@@ -1,0 +1,164 @@
+<svg viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg" style="background-color: #ffffff; font-family: sans-serif;">
+  <defs>
+    <style>
+      .main-title { font-size: 20px; font-weight: 800; fill: #0f172a; }
+      .sub-title { font-size: 13px; fill: #64748b; }
+      .section-title { font-size: 14px; font-weight: 700; fill: #1e293b; }
+      .code-text { font-family: 'Courier New', Courier, monospace; font-size: 16px; font-weight: bold; }
+      .token-label { font-size: 12px; font-weight: 600; fill: #ffffff; text-anchor: middle; }
+      .id-label { font-size: 13px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+      .arrow-text { font-size: 11px; fill: #475569; font-weight: 500; }
+    </style>
+
+    <!-- 渐变色定义 -->
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 画布背景 -->
+  <rect width="900" height="450" fill="#ffffff" />
+
+  <!-- 外围主管道框 -->
+  <rect x="40" y="25" width="820" height="400" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" />
+
+  <!-- 头部大标题 -->
+  <g transform="translate(60, 55)">
+    <text x="0" y="0" class="main-title">大模型分词器（Tokenizer）核心工作原理</text>
+    <text x="0" y="22" class="sub-title">自然语言文本（Text）➔ 语义片段微积木（Tokens）➔ 计算机数字特征矩阵（Token IDs）</text>
+  </g>
+
+  <!-- ==================== STAGE 1: 原始输入 ==================== -->
+  <g transform="translate(60, 110)">
+    <rect x="0" y="0" width="780" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="15" y="-12" class="section-title">【输入阶段】 原始自然语言字符串 (Raw Text Input)</text>
+
+    <g transform="translate(20, 12)" class="code-text">
+      <text x="10" y="20" fill="#0f172a" letter-spacing="4">unhappiness  AI   你好 !</text>
+      <path d="M10,28 L300,28" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2,2" />
+    </g>
+  </g>
+
+  <!-- 传导箭头序列 1 -->
+  <g transform="translate(450, 160)">
+    <line x1="0" y1="0" x2="0" y2="25" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,2" />
+    <polygon points="0,30 -5,22 5,22" fill="#94a3b8" />
+  </g>
+
+  <!-- ==================== STAGE 2: TOKEN 切分 ==================== -->
+  <g transform="translate(60, 215)">
+    <text x="15" y="-12" class="section-title">【分词阶段】 子词积木切分 (Tokens / Subwords Pieces)</text>
+    <rect x="0" y="0" width="780" height="65" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1" />
+
+    <!-- Token 1: un -->
+    <g transform="translate(20, 12)">
+      <rect x="0" y="0" width="55" height="40" rx="6" fill="url(#blueGrad)" />
+      <text x="27" y="24" class="token-label" style="font-family: monospace;">"un"</text>
+    </g>
+
+    <!-- Token 2: happiness -->
+    <g transform="translate(85, 12)">
+      <rect x="0" y="0" width="115" height="40" rx="6" fill="url(#emeraldGrad)" />
+      <text x="57" y="24" class="token-label" style="font-family: monospace;">"happiness"</text>
+    </g>
+
+    <!-- Token 3: ĠAI -->
+    <g transform="translate(210, 12)">
+      <rect x="0" y="0" width="80" height="40" rx="6" fill="url(#amberGrad)" />
+      <text x="40" y="24" class="token-label" style="font-family: monospace;">" ĠAI"</text>
+    </g>
+
+    <!-- Token 4: 你 -->
+    <g transform="translate(300, 12)">
+      <rect x="0" y="0" width="50" height="40" rx="6" fill="url(#purpleGrad)" />
+      <text x="25" y="24" class="token-label">"你"</text>
+    </g>
+
+    <!-- Token 5: 好 -->
+    <g transform="translate(360, 12)">
+      <rect x="0" y="0" width="50" height="40" rx="6" fill="url(#purpleGrad)" />
+      <text x="25" y="24" class="token-label">"好"</text>
+    </g>
+
+    <!-- Token 6: ! -->
+    <g transform="translate(420, 12)">
+      <rect x="0" y="0" width="45" height="40" rx="6" fill="#64748b" />
+      <text x="22" y="24" class="token-label" style="font-family: monospace;">"!"</text>
+    </g>
+
+    <text x="485" y="36" fill="#475569" style="font-size: 11px; font-style: italic; font-family: 'DejaVu Sans', 'Noto Sans', Arial, sans-serif;">
+      <tspan x="485" dy="0">➔ 算法特性：英文切分为子词；中文高频字成独立Token；</tspan>
+      <tspan x="485" dy="18">空格转为显式标记(&#x120;)</tspan>
+    </text>
+  </g>
+
+  <!-- 传导箭头序列 2 -->
+  <g transform="translate(450, 280)">
+    <line x1="0" y1="0" x2="0" y2="25" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,2" />
+    <polygon points="0,30 -5,22 5,22" fill="#94a3b8" />
+  </g>
+
+  <!-- ==================== STAGE 3: TOKEN IDs 数字映射 ==================== -->
+  <g transform="translate(60, 335)">
+    <text x="15" y="-12" class="section-title">【数字化阶段】 词表全局唯一索引 ID 化 (Token IDs Output)</text>
+    <rect x="0" y="0" width="780" height="65" rx="8" fill="#ffffff" stroke="#10b981" stroke-width="2" stroke-dasharray="6,4" />
+
+    <!-- ID 1 -->
+    <g transform="translate(20, 12)">
+      <rect x="0" y="0" width="55" height="40" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+      <text x="27" y="25" class="id-label">284</text>
+    </g>
+
+    <!-- ID 2 -->
+    <g transform="translate(85, 12)">
+      <rect x="0" y="0" width="115" height="40" rx="4" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5" />
+      <text x="57" y="25" class="id-label">17294</text>
+    </g>
+
+    <!-- ID 3 -->
+    <g transform="translate(210, 12)">
+      <rect x="0" y="0" width="80" height="40" rx="4" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5" />
+      <text x="40" y="25" class="id-label">8367</text>
+    </g>
+
+    <!-- ID 4 -->
+    <g transform="translate(300, 12)">
+      <rect x="0" y="0" width="50" height="40" rx="4" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5" />
+      <text x="25" y="25" class="id-label">38210</text>
+    </g>
+
+    <!-- ID 5 -->
+    <g transform="translate(360, 12)">
+      <rect x="0" y="0" width="50" height="40" rx="4" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5" />
+      <text x="25" y="25" class="id-label">20453</text>
+    </g>
+
+    <!-- ID 6 -->
+    <g transform="translate(420, 12)">
+      <rect x="0" y="0" width="45" height="40" rx="4" fill="#f8fafc" stroke="#64748b" stroke-width="1.5" />
+      <text x="22" y="25" class="id-label">0</text>
+    </g>
+
+    <!-- 动态数据流指示块 -->
+    <g transform="translate(485, 12)">
+      <rect x="0" y="0" width="280" height="40" rx="4" fill="#f0fdf4" />
+      <text x="10" y="24" fill="#15803d" style="font-size: 11px; font-weight: 600;">输入数值向量: [284, 17294, 8367, ...]</text>
+      <circle cx="260" cy="20" r="4" fill="#10b981">
+        <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite" />
+      </circle>
+    </g>
+  </g>
+</svg>

@@ -21,6 +21,12 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: "Lenard · 个人博客",
+    // 界面文案本地化（中文）
+    sidebarMenuLabel: '目录',
+    returnToTopLabel: '返回顶部',
+    darkModeSwitchLabel: '外观',
+    darkModeSwitchTitle: '切换到深色',
+    lightModeSwitchTitle: '切换到浅色',
     outline: { level: [2,4], label: '本章目录' },
     // 底部分页文案
     docFooter: {
