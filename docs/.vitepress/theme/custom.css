@@ -371,6 +371,7 @@ html, body { overflow-x: hidden; }
 .VPNavBarMenuLink { padding: 0 8px; font-size: 13px; }
 .VPNavBarTitle .title { font-size: 16px; }
 .VPNavBarHamburger { display: none !important; }
+.VPNavBarSearch { display: none !important; }   /* 移动端不显示搜索框 */
 }
 @media (max-width: 480px) {
   .VPNavBarTitle .title { font-size: 14px; }
@@ -385,12 +386,45 @@ html, body { overflow-x: hidden; }
 }
 .back-top-btn.show { display: flex; }
 @media (min-width: 768px) { .back-top-btn { display: none !important; } }
+/* 标题旁的 # 锚标记隐藏（保留锚链接供搜索索引生成） */
+.vp-doc .header-anchor { display: none !important; }
+/* 表格中的链接不带下划线（悬停时恢复，提示可点击） */
+.vp-doc table a { text-decoration: none; }
+.vp-doc table a:hover { text-decoration: underline; }
 /* ---------------------------------------------------------
 11. 可访问性减速防御 (Accessibility)
---------------------------------------------------------- */
-@media (prefers-reduced-motion: reduce) {
+--------------------------------------------------------- */@media (prefers-reduced-motion: reduce) {
   .Layout::after, .card-item, .card-item::after {
   -webkit-animation: none !important; animation: none !important;
   transition: none !important;
   }
 }
+/* ---------------------------------------------------------
+12. 搜索框改为“内联下拉”：无遮罩、无底部快捷键说明，
+    面板紧贴导航栏下方，视觉上在原框位置直接输入
+--------------------------------------------------------- */
+.VPLocalSearchBox { align-items: flex-start !important; }
+.VPLocalSearchBox .backdrop {
+  background: transparent !important;   /* 去掉全屏遮罩；点击空白处仍可关闭 */
+}
+.VPLocalSearchBox .shell {
+  position: fixed !important;
+  top: 52px !important;                 /* 紧贴导航栏下沿 */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  width: 640px !important;
+  max-width: calc(100vw - 32px) !important;
+  padding: 10px !important;
+  gap: 12px !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.22) !important;
+  max-height: none !important;
+}
+/* 结果列表限高滚动，避免撑满整屏 */
+.VPLocalSearchBox .results {
+  max-height: min(58vh, 520px) !important;
+}
+/* 隐藏底部“↑↓ 选择 / ↵ 进入 / esc 关闭”快捷键说明 */
+.VPLocalSearchBox .search-keyboard-shortcuts { display: none !important; }
+/* 隐藏默认搜索按钮（已被自定义内联搜索框替换） */
+.VPNavBarSearch { display: none !important; }

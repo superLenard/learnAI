@@ -4,12 +4,10 @@ export default defineConfig({
   base: '/learnAI/',
   title: "Lenard的博客",
   description: "个人笔记博客，记录学习与思考",
-  // 在这里添加配置，关闭标题旁边的 # 锚链接标记
+  // 搜索索引依赖标题锚链接（VitePress 默认生成，勿关闭 permalink）；
+  // 若想隐藏标题旁的 # 标记，用 custom.css 里的 .header-anchor 隐藏即可
+  // 启用数学公式渲染（$...$ 行内、$$...$$ 独立行，基于 markdown-it-mathjax3）
   markdown: {
-    anchor: {
-      permalink: false
-    },
-    // 启用数学公式渲染（$...$ 行内、$$...$$ 独立行，基于 markdown-it-mathjax3）
     math: true
   },
   // 页面头部元信息
@@ -21,6 +19,18 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: "Lenard · 个人博客",
+    // 显示文章最后更新时间（git 自动，按最后提交时间）
+    lastUpdated: true,
+    lastUpdatedText: '最后更新于',
+    // 全局本地搜索框（渲染在导航栏“笔记合集”左侧；移动端在 custom.css 中隐藏）
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: { buttonText: '搜索', buttonAriaLabel: '搜索' }
+        }
+      }
+    },
     // 界面文案本地化（中文）
     sidebarMenuLabel: '目录',
     returnToTopLabel: '返回顶部',

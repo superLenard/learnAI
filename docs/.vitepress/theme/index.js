@@ -1,5 +1,17 @@
 import DefaultTheme from 'vitepress/theme'
+import { defineComponent, h } from 'vue'
+import MyInlineSearch from './components/MyInlineSearch.vue'
 import './custom.css'
+
+// 把自定义内联搜索框注入导航栏（笔记合集左侧），替换默认弹出式搜索
+const MyLayout = defineComponent({
+  setup() {
+    return () =>
+      h(DefaultTheme.Layout, null, {
+        'nav-bar-content-before': () => h(MyInlineSearch)
+      })
+  }
+})
 
 // 移动端悬浮“返回顶部”按钮
 function initBackTop() {
@@ -24,6 +36,7 @@ function initBackTop() {
 
 export default {
   ...DefaultTheme,
+  Layout: MyLayout,
   enhanceApp(ctx) {
     // 保留默认主题的增强（注册 Badge 组件等）
     if (typeof DefaultTheme.enhanceApp === 'function') {

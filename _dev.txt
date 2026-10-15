@@ -1,0 +1,27 @@
+﻿
+> docs:dev
+> vitepress dev docs
+
+node.exe : (node:2540) Warning: Using deprecated markdown-it-anchor permalink option, see https://github.com/valerianga
+lliat/markdown-it-anchor#permalinks
+所在位置 行:1 字符: 1
++ & "C:\Users\Administrator\AppData\Local\Doubao\User Data\sandbox_runt ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:2540) War...chor#permalinks:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+Port 5173 is in use, trying another one...
+
+  [32m[1mvitepress[22m v1.6.4[39m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/learnAI/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[2m11:56:32[22m [36m[1m[vitepress][22m[39m [32mdocs\.vitepress\config.js changed, restarting server...
+[39m
+Port 5173 is in use, trying another one...
+
+  [32m[1mvitepress[22m v1.6.4[39m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5174[22m/learnAI/[39m
+[2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
