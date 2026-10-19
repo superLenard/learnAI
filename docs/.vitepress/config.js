@@ -70,7 +70,7 @@ export default defineConfig({
       }
     ],
     nav: [
-      { text: '笔记合集', link: 'https://superlenard.github.io/myblog/' },
+      { text: '笔记合集', link: 'https://superlenard.github.io/myBlog/' },
     ],
     // GitHub 右上角链接
     socialLinks: [
