@@ -173,6 +173,18 @@ html, body {
 }
 .VPDocAsideOutline .content { padding-left: 12px; }
 
+/* 修复：VitePress 1.6 把右侧目录容器(.aside-container)改成 position:fixed，
+   会在 Chromium 里破坏其后代 .outline-link 的 text-overflow:ellipsis，
+   导致长章节标题不显示省略号。改回 sticky 以恢复省略号并保留吸顶滚动。 */
+.VPDoc .aside-container {
+  position: sticky !important;
+  top: var(--vp-nav-height, 72px);
+  height: auto;
+  max-height: calc(100vh - var(--vp-nav-height, 72px) - 24px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 /* 右侧文档大纲超宽缩略防御 */
 .VPDocAsideOutline, .VPDocAsideOutline .content, .VPDocAsideOutline .outline,
 .VPDocAsideOutline .VPDocOutlineItem, .VPDocAsideOutline .VPDocOutlineItem li,
