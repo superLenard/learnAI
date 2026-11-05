@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="700" viewBox="0 0 950 700">
+<defs><style>.t{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#263B59}.h{font-size:28px;font-weight:bold}.s{font-size:19px}</style></defs>
+<rect width="950" height="700" rx="24" fill="#F5F8FE"/>
+<text x="475" y="55" text-anchor="middle" class="t h">Causal Mask：只能关注过去和当前位置</text>
+<text x="475" y="95" text-anchor="middle" class="t s">输入序列：我 / 喜欢 / 人工 / 智能</text>
+<text x="475" y="150" text-anchor="middle" class="t s">Key（被关注的 Token）</text>
+<g class="t s" text-anchor="middle"><text x="385" y="200">我</text><text x="475" y="200">喜欢</text><text x="565" y="200">人工</text><text x="655" y="200">智能</text></g>
+<text x="185" y="380" transform="rotate(-90 185 380)" text-anchor="middle" class="t s">Query（当前 Token）</text>
+<g transform="translate(340 215)">
+<rect width="90" height="75" rx="8" fill="#73CBA1"/><rect x="90" width="90" height="75" rx="8" fill="#F7D9DC"/><rect x="180" width="90" height="75" rx="8" fill="#F7D9DC"/><rect x="270" width="90" height="75" rx="8" fill="#F7D9DC"/>
+<rect y="75" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="90" y="75" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="180" y="75" width="90" height="75" rx="8" fill="#F7D9DC"/><rect x="270" y="75" width="90" height="75" rx="8" fill="#F7D9DC"/>
+<rect y="150" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="90" y="150" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="180" y="150" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="270" y="150" width="90" height="75" rx="8" fill="#F7D9DC"/>
+<rect y="225" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="90" y="225" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="180" y="225" width="90" height="75" rx="8" fill="#73CBA1"/><rect x="270" y="225" width="90" height="75" rx="8" fill="#73CBA1"/>
+<g class="t s" text-anchor="middle"><text x="45" y="45">1</text><text x="135" y="45">0</text><text x="225" y="45">0</text><text x="315" y="45">0</text><text x="45" y="120">1</text><text x="135" y="120">1</text><text x="225" y="120">0</text><text x="315" y="120">0</text><text x="45" y="195">1</text><text x="135" y="195">1</text><text x="225" y="195">1</text><text x="315" y="195">0</text><text x="45" y="270">1</text><text x="135" y="270">1</text><text x="225" y="270">1</text><text x="315" y="270">1</text></g></g>
+<g class="t s" text-anchor="middle"><text x="300" y="262">我</text><text x="300" y="337">喜欢</text><text x="300" y="412">人工</text><text x="300" y="487">智能</text></g>
+<rect x="180" y="555" width="240" height="55" rx="12" fill="#DDF5EB" stroke="#70C49B"/><text x="300" y="590" text-anchor="middle" class="t s">1：允许关注</text>
+<rect x="530" y="555" width="240" height="55" rx="12" fill="#F7D9DC" stroke="#E79AA4"/><text x="650" y="590" text-anchor="middle" class="t s">0：禁止关注</text>
+<text x="475" y="650" text-anchor="middle" class="t" font-size="17">被屏蔽位置在 Softmax 后权重为 0，避免未来信息泄漏</text>
+</svg>

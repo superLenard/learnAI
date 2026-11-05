@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="790" viewBox="0 0 1100 790">
+<defs><marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#5479B8" stroke-width="1.5"/></marker><style>.t{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#263B59}.h{font-size:28px;font-weight:bold}.s{font-size:19px}.a{fill:none;stroke:#5479B8;stroke-width:2.5;marker-end:url(#b)}</style></defs>
+<rect width="1100" height="790" rx="24" fill="#F5F8FE"/>
+<text x="550" y="55" text-anchor="middle" class="t h">Self-Attention：Q、K、V 的计算过程</text>
+<rect x="390" y="90" width="320" height="62" rx="14" fill="#DCEBFF" stroke="#75A9EF" stroke-width="2"/><text x="550" y="128" text-anchor="middle" class="t s">输入向量矩阵 X</text>
+<path d="M550 152V190H190V220M550 190V220M550 190H910V220" class="a"/>
+<rect x="80" y="225" width="220" height="85" rx="14" fill="#DCEBFF" stroke="#75A9EF" stroke-width="2"/><text x="190" y="260" text-anchor="middle" class="t s" font-weight="bold">Query（Q）</text><text x="190" y="287" text-anchor="middle" class="t">X × WQ</text>
+<rect x="440" y="225" width="220" height="85" rx="14" fill="#E8E2FF" stroke="#A28BE8" stroke-width="2"/><text x="550" y="260" text-anchor="middle" class="t s" font-weight="bold">Key（K）</text><text x="550" y="287" text-anchor="middle" class="t">X × WK</text>
+<rect x="800" y="225" width="220" height="85" rx="14" fill="#DDF5EB" stroke="#70C49B" stroke-width="2"/><text x="910" y="260" text-anchor="middle" class="t s" font-weight="bold">Value（V）</text><text x="910" y="287" text-anchor="middle" class="t">X × WV</text>
+<path d="M190 310V355H410V385M550 310V355H410M910 310V485" class="a"/>
+<rect x="280" y="390" width="260" height="60" rx="14" fill="#FFF0D8" stroke="#E8B55F" stroke-width="2"/><text x="410" y="427" text-anchor="middle" class="t s">QKᵀ：计算相关性分数</text>
+<path d="M410 450V480" class="a"/>
+<rect x="280" y="485" width="260" height="60" rx="14" fill="#FFF0D8" stroke="#E8B55F" stroke-width="2"/><text x="410" y="522" text-anchor="middle" class="t s">除以 √dₖ：缩放</text>
+<path d="M410 545V575" class="a"/>
+<rect x="280" y="580" width="260" height="60" rx="14" fill="#E8E2FF" stroke="#A28BE8" stroke-width="2"/><text x="410" y="617" text-anchor="middle" class="t s">Softmax：得到注意力权重</text>
+<path d="M540 610H680V540H730M910 485V540H730" class="a"/>
+<rect x="610" y="500" width="300" height="80" rx="14" fill="#DDF5EB" stroke="#70C49B" stroke-width="2"/><text x="760" y="532" text-anchor="middle" class="t s">注意力权重 × V</text><text x="760" y="558" text-anchor="middle" class="t">加权融合信息</text>
+<path d="M760 580V625" class="a"/>
+<rect x="610" y="630" width="300" height="65" rx="14" fill="#DCEBFF" stroke="#75A9EF" stroke-width="2"/><text x="760" y="670" text-anchor="middle" class="t s" font-weight="bold">Attention 输出</text>
+<text x="550" y="750" text-anchor="middle" class="t" font-size="18">Attention(Q,K,V) = Softmax(QKᵀ / √dₖ)V</text>
+</svg>

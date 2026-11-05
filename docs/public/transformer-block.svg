@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="950" height="850" viewBox="0 0 950 850">
+<defs><marker id="c" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L8 3L0 6" fill="none" stroke="#5479B8" stroke-width="1.5"/></marker><style>.t{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#263B59}.h{font-size:28px;font-weight:bold}.s{font-size:20px}.a{stroke:#5479B8;stroke-width:2.5;fill:none;marker-end:url(#c)}</style></defs>
+<rect width="950" height="850" rx="24" fill="#F5F8FE"/>
+<text x="475" y="55" text-anchor="middle" class="t h">Decoder Transformer Block（Pre-Norm 示意）</text>
+<rect x="335" y="90" width="280" height="60" rx="13" fill="#DCEBFF" stroke="#75A9EF" stroke-width="2"/><text x="475" y="128" text-anchor="middle" class="t s">输入隐藏状态 X</text>
+<path d="M475 150V185" class="a"/>
+<rect x="335" y="190" width="280" height="60" rx="13" fill="#E8E2FF" stroke="#A28BE8" stroke-width="2"/><text x="475" y="228" text-anchor="middle" class="t s">LayerNorm / RMSNorm</text>
+<path d="M475 250V285" class="a"/>
+<rect x="335" y="290" width="280" height="70" rx="13" fill="#FFF0D8" stroke="#E8B55F" stroke-width="2"/><text x="475" y="320" text-anchor="middle" class="t s">Masked Multi-Head</text><text x="475" y="345" text-anchor="middle" class="t s">Self-Attention</text>
+<path d="M475 360V395" class="a"/>
+<rect x="335" y="400" width="280" height="55" rx="13" fill="#DDF5EB" stroke="#70C49B" stroke-width="2"/><text x="475" y="435" text-anchor="middle" class="t s">Residual Add（与 X 相加）</text>
+<path d="M475 455V490" class="a"/>
+<rect x="335" y="495" width="280" height="60" rx="13" fill="#E8E2FF" stroke="#A28BE8" stroke-width="2"/><text x="475" y="533" text-anchor="middle" class="t s">LayerNorm / RMSNorm</text>
+<path d="M475 555V590" class="a"/>
+<rect x="335" y="595" width="280" height="70" rx="13" fill="#DCEBFF" stroke="#75A9EF" stroke-width="2"/><text x="475" y="625" text-anchor="middle" class="t s">Feed Forward Network</text><text x="475" y="650" text-anchor="middle" class="t s">FFN / SwiGLU</text>
+<path d="M475 665V700" class="a"/>
+<rect x="335" y="705" width="280" height="55" rx="13" fill="#DDF5EB" stroke="#70C49B" stroke-width="2"/><text x="475" y="740" text-anchor="middle" class="t s">Residual Add</text>
+<path d="M475 760V790" class="a"/>
+<text x="475" y="825" text-anchor="middle" class="t s" font-weight="bold">输出 → 下一个 Transformer Block</text>
+<path d="M300 120H250V425H330" stroke="#E39A53" stroke-width="2.5" fill="none" stroke-dasharray="7 5" marker-end="url(#c)"/>
+<text x="190" y="275" text-anchor="middle" class="t s">残差支路</text>
+<path d="M300 120H160V730H330" stroke="#E39A53" stroke-width="2.5" fill="none" stroke-dasharray="7 5" marker-end="url(#c)"/>
+<text x="100" y="430" text-anchor="middle" class="t s">输入信息保留</text>
+</svg>
